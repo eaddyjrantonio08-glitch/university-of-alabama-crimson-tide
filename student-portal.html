@@ -1,14 +1,65 @@
-<h1>Student Portal Login</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Portal</title>
+</head>
+<body>
 
-<input type="text" placeholder="Student ID">
+<h1>University of Alabama Crimson Tide RP</h1>
 
-<input type="password" placeholder="Password">
+<input id="studentId" type="text" placeholder="Student ID">
 
-<a href="student-dashboard.html">
-<button>Login</button>
-</a>
+<button onclick="login()">Login</button>
 
-<p>
-Example Student ID:
-UA-2026-001
-</p>
+<p>Example Student ID: UA-2026-001</p>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDyWgsYhq6nZ06lRw65nTeoi9GAeiJCatk",
+  authDomain: "alabama-crimson-tide-rp.firebaseapp.com",
+  projectId: "alabama-crimson-tide-rp",
+  storageBucket: "alabama-crimson-tide-rp.firebasestorage.app",
+  messagingSenderId: "725384248300",
+  appId: "1:725384248300:web:aa3dc1d839c185bbd79ec9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.login = async function() {
+
+const studentId =
+document.getElementById("studentId").value;
+
+const studentRef =
+doc(db, "students", studentId);
+
+const studentSnap =
+await getDoc(studentRef);
+
+if(studentSnap.exists()){
+
+localStorage.setItem(
+"studentData",
+JSON.stringify(studentSnap.data())
+);
+
+window.location.href =
+"student-dashboard.html";
+
+}else{
+
+alert("Student ID not found");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
