@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Enrollment</title>
+<title>Student Portal</title>
+
 <style>
 body{
 font-family:Arial;
 background:#f4f4f4;
-padding:20px;
 }
 
 .container{
-max-width:700px;
-margin:auto;
+max-width:500px;
+margin:50px auto;
 background:white;
 padding:25px;
 border-radius:10px;
@@ -21,19 +21,18 @@ h1{
 color:#9E1B32;
 }
 
-input,select,textarea{
+input{
 width:100%;
 padding:10px;
 margin:10px 0;
 }
 
 button{
+width:100%;
+padding:12px;
 background:#9E1B32;
 color:white;
 border:none;
-padding:12px;
-width:100%;
-cursor:pointer;
 }
 </style>
 </head>
@@ -42,30 +41,15 @@ cursor:pointer;
 
 <div class="container">
 
-<h1>University Enrollment Application</h1>
-
-<form>
+<h1>Student Portal Login</h1>
 
 <input type="text" placeholder="Roblox Username">
 
-<input type="text" placeholder="Display Name">
+<input type="password" placeholder="Password">
 
-<input type="number" placeholder="Age">
-
-<select>
-<option>Select Major</option>
-<option>Business</option>
-<option>Law</option>
-<option>Medicine</option>
-<option>Computer Science</option>
-<option>Education</option>
-</select>
-
-<textarea placeholder="Why do you want to attend our university?"></textarea>
-
-<button type="submit">Submit Application</button>
-
-</form>
+<a href="student-dashboard.html">
+<button>Login</button>
+</a>
 
 </div>
 
