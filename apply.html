@@ -2,27 +2,74 @@
 <html>
 <head>
 <title>Apply to University of Alabama Crimson Tide</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f4f4f4;
+padding:40px;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:10px;
+}
+
+h1{
+color:#9E1B32;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+margin-bottom:15px;
+}
+
+button{
+background:#9E1B32;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+cursor:pointer;
+}
+</style>
+
 </head>
 <body>
 
+<div class="container">
+
 <h1>University Application</h1>
 
-<input type="text" id="name" placeholder="Full Name">
-<br><br>
+<input
+type="text"
+id="name"
+placeholder="Full Name">
 
-<input type="text" id="major" placeholder="Major">
-<br><br>
+<input
+type="text"
+id="major"
+placeholder="Major">
 
 <button onclick="submitApplication()">
 Submit Application
 </button>
 
+</div>
+
 <script>
-function submitApplication() {
+
+function submitApplication(){
 
 alert("Application Submitted!");
 
 }
+
 </script>
 
 </body>
