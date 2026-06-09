@@ -2,12 +2,37 @@
 <html>
 <head>
 <title>Student Dashboard</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f4f4f4;
+padding:40px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:10px;
+max-width:700px;
+margin:auto;
+}
+
+h1{
+color:#9E1B32;
+}
+</style>
+
 </head>
 <body>
 
+<div class="card">
+
 <h1>Student Dashboard</h1>
 
-<h2 id="name"></h2>
+<h2 id="name">Loading...</h2>
+
+<p id="studentId"></p>
 
 <p id="major"></p>
 
@@ -17,15 +42,53 @@
 
 <p id="attendance"></p>
 
-<script>
+<p id="status"></p>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyDyWgsYhq6nZ06lRw65nTeoi9GAeiJCatk",
+authDomain: "alabama-crimson-tide-rp.firebaseapp.com",
+projectId: "alabama-crimson-tide-rp",
+storageBucket: "alabama-crimson-tide-rp.firebasestorage.app",
+messagingSenderId: "725384248300",
+appId: "1:725384248300:web:aa3dc1d839c185bbd79ec9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const studentId =
+localStorage.getItem("studentId");
+
+const studentRef =
+doc(db,"students",studentId);
+
+const studentSnap =
+await getDoc(studentRef);
+
+if(studentSnap.exists()){
 
 const student =
-JSON.parse(
-localStorage.getItem("studentData")
-);
+studentSnap.data();
 
 document.getElementById("name").innerHTML =
 student.name;
+
+document.getElementById("studentId").innerHTML =
+"Student ID: " + student.studentId;
 
 document.getElementById("major").innerHTML =
 "Major: " + student.major;
@@ -38,6 +101,16 @@ document.getElementById("gpa").innerHTML =
 
 document.getElementById("attendance").innerHTML =
 "Attendance: " + student.attendance + "%";
+
+document.getElementById("status").innerHTML =
+"Status: " + student.status;
+
+}else{
+
+document.body.innerHTML =
+"<h1>Student Not Found</h1>";
+
+}
 
 </script>
 
