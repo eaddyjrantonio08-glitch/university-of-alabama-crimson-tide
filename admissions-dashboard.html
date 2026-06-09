@@ -102,9 +102,10 @@ onclick="acceptStudent('${doc.id}')">
     Accept
 </button>
 
-                <button class="deny">
-                    Deny
-                </button>
+                <button class="deny"
+onclick="denyStudent('${doc.id}')">
+Deny
+</button>
             </div>
         `;
     });
@@ -177,6 +178,27 @@ console.error(error);
 alert(
 "Error creating student."
 );
+
+}
+
+}
+    window.denyStudent = async function(applicationId){
+
+try{
+
+await deleteDoc(
+doc(db,"applications",applicationId)
+);
+
+alert("Application Denied");
+
+location.reload();
+
+}catch(error){
+
+console.error(error);
+
+alert("Error denying application.");
 
 }
 
