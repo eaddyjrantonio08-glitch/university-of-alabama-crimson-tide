@@ -54,9 +54,9 @@ getDocs,
 doc,
 getDoc,
 setDoc,
-updateDoc
+updateDoc,
+deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 const firebaseConfig = {
     apiKey: "AIzaSyDyWgsYhq6nZ06lRw65nTeoi9GAeiJCatk",
     authDomain: "alabama-crimson-tide-rp.firebaseapp.com",
@@ -111,9 +111,74 @@ onclick="acceptStudent('${doc.id}')">
 }
 window.acceptStudent = async function(applicationId){
 
-alert(
-"Accept button connected successfully. Next step will create student accounts automatically."
+try{
+
+const applicationRef =
+doc(db,"applications",applicationId);
+
+const applicationSnap =
+await getDoc(applicationRef);
+
+const applicationData =
+applicationSnap.data();
+
+const counterRef =
+doc(db,"counters","studentIds");
+
+const counterSnap =
+await getDoc(counterRef);
+
+let current =
+counterSnap.data().current;
+
+const studentId =
+"UA-2026-" +
+String(current).padStart(3,"0");
+
+await setDoc(
+doc(db,"students",studentId),
+{
+name:
+applicationData.displayName,
+
+major:
+applicationData.major,
+
+classification:
+"Freshman",
+
+gpa:0.0,
+
+attendance:100,
+
+studentId:studentId,
+
+status:"Active"
+}
 );
+
+await updateDoc(counterRef,{
+current:current + 1
+});
+
+await deleteDoc(applicationRef);
+
+alert(
+"Student Accepted! Student ID: " +
+studentId
+);
+
+location.reload();
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Error creating student."
+);
+
+}
 
 }
 loadApplications();
