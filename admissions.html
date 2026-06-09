@@ -1,73 +1,164 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Enrollment</title>
-<style>
-body{
-font-family:Arial;
-background:#f4f4f4;
-padding:20px;
-}
+    <title>University Enrollment Application</title>
 
-.container{
-max-width:700px;
-margin:auto;
-background:white;
-padding:25px;
-border-radius:10px;
-}
+    <style>
+        body{
+            font-family:Arial,sans-serif;
+            background:#f4f4f4;
+            padding:40px;
+        }
 
-h1{
-color:#9E1B32;
-}
+        .container{
+            max-width:700px;
+            margin:auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,.1);
+        }
 
-input,select,textarea{
-width:100%;
-padding:10px;
-margin:10px 0;
-}
+        h1{
+            text-align:center;
+            color:#9E1B32;
+        }
 
-button{
-background:#9E1B32;
-color:white;
-border:none;
-padding:12px;
-width:100%;
-cursor:pointer;
-}
-</style>
+        input, select, textarea{
+            width:100%;
+            padding:12px;
+            margin-top:10px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            border:none;
+            background:#9E1B32;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#7c1527;
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
 
 <h1>University Enrollment Application</h1>
 
-<form>
+<input type="text" id="username" placeholder="Roblox Username">
 
-<input type="text" placeholder="Roblox Username">
+<input type="text" id="displayName" placeholder="Display Name">
 
-<input type="text" placeholder="Display Name">
-
-<input type="number" placeholder="Age">
-
-<select>
-<option>Select Major</option>
-<option>Business</option>
-<option>Law</option>
-<option>Medicine</option>
-<option>Computer Science</option>
-<option>Education</option>
+<select id="age">
+    <option value="">Age</option>
+    <option>18</option>
+    <option>19</option>
+    <option>20</option>
+    <option>21</option>
+    <option>22</option>
 </select>
 
-<textarea placeholder="Why do you want to attend our university?"></textarea>
+<select id="major">
+    <option value="">Select Major</option>
+    <option>Business Administration</option>
+    <option>Computer Science</option>
+    <option>Criminal Justice</option>
+    <option>Education</option>
+    <option>Nursing</option>
+</select>
 
-<button type="submit">Submit Application</button>
+<textarea id="reason" placeholder="Why do you want to attend our university?"></textarea>
 
-</form>
+<button onclick="submitApplication()">
+    Submit Application
+</button>
 
 </div>
 
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDyWgsYhq6nZ06lRw65nTeoi9GAeiJCatk",
+    authDomain: "alabama-crimson-tide-rp.firebaseapp.com",
+    projectId: "alabama-crimson-tide-rp",
+    storageBucket: "alabama-crimson-tide-rp.firebasestorage.app",
+    messagingSenderId: "725384248300",
+    appId: "1:725384248300:web:aa3dc1d839c185bbd79ec9",
+    measurementId: "G-CHDTFJYJWX"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.submitApplication = async function() {
+
+    const username =
+    document.getElementById("username").value;
+
+    const displayName =
+    document.getElementById("displayName").value;
+
+    const age =
+    document.getElementById("age").value;
+
+    const major =
+    document.getElementById("major").value;
+
+    const reason =
+    document.getElementById("reason").value;
+
+    try {
+
+        await addDoc(
+            collection(db,"applications"),
+            {
+                username,
+                displayName,
+                age,
+                major,
+                reason,
+                status:"Pending",
+                submitted:new Date()
+            }
+        );
+
+        alert("Application Submitted!");
+
+        document.getElementById("username").value="";
+        document.getElementById("displayName").value="";
+        document.getElementById("age").value="";
+        document.getElementById("major").value="";
+        document.getElementById("reason").value="";
+
+    } catch(error){
+
+        console.error(error);
+
+        alert(
+          "Error submitting application. Check console."
+        );
+    }
+}
+
+</script>
+
 </body>
 </html>
+
