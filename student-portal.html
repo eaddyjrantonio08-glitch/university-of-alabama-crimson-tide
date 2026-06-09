@@ -1,61 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Portal</title>
+<title>Student Portal Login</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f4f4f4;
+padding:40px;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:10px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#9E1B32;
+color:white;
+border:none;
+cursor:pointer;
+}
+</style>
 </head>
+
 <body>
 
-<h1>University of Alabama Crimson Tide RP</h1>
+<div class="container">
 
-<input id="studentId" type="text" placeholder="Student ID">
+<h1>Student Portal Login</h1>
 
-<button onclick="login()">Login</button>
+<input
+id="studentId"
+type="text"
+placeholder="Student ID">
 
-<p>Example Student ID: UA-2026-001</p>
+<button onclick="login()">
+Login
+</button>
 
-<script type="module">
+</div>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<script>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDyWgsYhq6nZ06lRw65nTeoi9GAeiJCatk",
-  authDomain: "alabama-crimson-tide-rp.firebaseapp.com",
-  projectId: "alabama-crimson-tide-rp",
-  storageBucket: "alabama-crimson-tide-rp.firebasestorage.app",
-  messagingSenderId: "725384248300",
-  appId: "1:725384248300:web:aa3dc1d839c185bbd79ec9"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.login = async function() {
+function login(){
 
 const studentId =
 document.getElementById("studentId").value;
 
-const studentRef =
-doc(db, "students", studentId);
-
-const studentSnap =
-await getDoc(studentRef);
-
-if(studentSnap.exists()){
-
 localStorage.setItem(
-"studentData",
-JSON.stringify(studentSnap.data())
+"studentId",
+studentId
 );
 
 window.location.href =
 "student-dashboard.html";
-
-}else{
-
-alert("Student ID not found");
-
-}
 
 }
 
