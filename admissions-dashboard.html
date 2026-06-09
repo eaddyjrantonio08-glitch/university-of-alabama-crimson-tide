@@ -50,7 +50,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
 getFirestore,
 collection,
-getDocs
+getDocs,
+doc,
+getDoc,
+setDoc,
+updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -93,9 +97,10 @@ async function loadApplications(){
                 <p><b>Reason:</b>
                 ${appData.reason}</p>
 
-                <button class="accept">
-                    Accept
-                </button>
+                <button class="accept"
+onclick="acceptStudent('${doc.id}')">
+    Accept
+</button>
 
                 <button class="deny">
                     Deny
@@ -104,7 +109,13 @@ async function loadApplications(){
         `;
     });
 }
+window.acceptStudent = async function(applicationId){
 
+alert(
+"Accept button connected successfully. Next step will create student accounts automatically."
+);
+
+}
 loadApplications();
 
 </script>
