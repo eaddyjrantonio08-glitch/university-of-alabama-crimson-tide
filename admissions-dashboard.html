@@ -110,32 +110,6 @@ Deny
         `;
     });
 }
-window.acceptStudent = async function(applicationId){
-
-try{
-
-const applicationRef =
-doc(db,"applications",applicationId);
-
-const applicationSnap =
-await getDoc(applicationRef);
-
-const applicationData =
-applicationSnap.data();
-
-const counterRef =
-doc(db,"counters","studentIds");
-
-const counterSnap =
-await getDoc(counterRef);
-
-let current =
-counterSnap.data().current;
-
-const studentId =
-"UA-2026-" +
-String(current).padStart(3,"0");
-
 await setDoc(
 doc(db,"students",studentId),
 {
@@ -153,6 +127,9 @@ gpa:0.0,
 attendance:100,
 
 studentId:studentId,
+
+discordId:
+applicationData.discordId,
 
 status:"Active"
 }
