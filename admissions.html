@@ -58,6 +58,8 @@
 
 <input type="text" id="displayName" placeholder="Display Name">
 
+<input type="text" id="discordId" placeholder="Discord User ID">
+
 <select id="age">
     <option value="">Age</option>
     <option>18</option>
@@ -113,7 +115,10 @@ window.submitApplication = async function() {
     document.getElementById("username").value;
 
     const displayName =
-    document.getElementById("displayName").value;
+document.getElementById("displayName").value;
+
+const discordId =
+document.getElementById("discordId").value;
 
     const age =
     document.getElementById("age").value;
@@ -128,21 +133,23 @@ window.submitApplication = async function() {
 
         await addDoc(
             collection(db,"applications"),
-            {
-                username,
-                displayName,
-                age,
-                major,
-                reason,
-                status:"Pending",
-                submitted:new Date()
-            }
+           {
+    username,
+    displayName,
+    discordId,
+    age,
+    major,
+    reason,
+    status:"Pending",
+    submitted:new Date()
+}
         );
 
         alert("Application Submitted!");
 
         document.getElementById("username").value="";
         document.getElementById("displayName").value="";
+        document.getElementById("discordId").value="";
         document.getElementById("age").value="";
         document.getElementById("major").value="";
         document.getElementById("reason").value="";
