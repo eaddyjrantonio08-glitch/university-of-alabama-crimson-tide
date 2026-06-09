@@ -1,3 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admissions Dashboard</title>
+
+    <style>
+        body{
+            font-family:Arial,sans-serif;
+            padding:20px;
+            background:#f4f4f4;
+        }
+
+        .card{
+            background:white;
+            padding:20px;
+            margin-bottom:15px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,.1);
+        }
+
+        button{
+            padding:10px;
+            margin-right:10px;
+            cursor:pointer;
+        }
+
+        .accept{
+            background:green;
+            color:white;
+            border:none;
+        }
+
+        .deny{
+            background:red;
+            color:white;
+            border:none;
+        }
+    </style>
+</head>
+<body>
+
 <h1>Admissions Dashboard</h1>
 
 <div id="applications"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDyWgsYhq6nZ06lRw65nTeoi9GAeiJCatk",
+    authDomain: "alabama-crimson-tide-rp.firebaseapp.com",
+    projectId: "alabama-crimson-tide-rp",
+    storageBucket: "alabama-crimson-tide-rp.firebasestorage.app",
+    messagingSenderId: "725384248300",
+    appId: "1:725384248300:web:aa3dc1d839c185bbd79ec9",
+    measurementId: "G-CHDTFJYJWX"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadApplications(){
+
+    const snapshot =
+    await getDocs(collection(db,"applications"));
+
+    const container =
+    document.getElementById("applications");
+
+    container.innerHTML="";
+
+    snapshot.forEach(doc=>{
+
+        const appData = doc.data();
+
+        container.innerHTML += `
+            <div class="card">
+                <h3>${appData.displayName}</h3>
+
+                <p><b>Username:</b>
+                ${appData.username}</p>
+
+                <p><b>Major:</b>
+                ${appData.major}</p>
+
+                <p><b>Reason:</b>
+                ${appData.reason}</p>
+
+                <button class="accept">
+                    Accept
+                </button>
+
+                <button class="deny">
+                    Deny
+                </button>
+            </div>
+        `;
+    });
+}
+
+loadApplications();
+
+</script>
+
+</body>
+</html>
